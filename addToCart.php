@@ -1,36 +1,23 @@
-<?php require_once "./DbConnection.php";
-    require_once "./API.php";
-    session_start();
+<?php require_once "./Everything.php";
 
-    if(!isset($_SESSION["Cart"])){
-        $_SESSION["Cart"] = array();
-        $addItem = array("ProductId" => (int)$_POST["ProductId"], "AddAmount" => (int)$_POST["AddAmount"]);
-        array_push($_SESSION["Cart"], $addItem);
+    $productCart = GetProductCart(1);
+    $exists = false;
+    foreach ($productCart as $product){
+        if((int)$_POST["ProductId"] == $product->getProductId()) {
+            echo "it exist";
+            $exists = true;
+            $currentAmount = $product->getAmount();
+            break;
+        }
+    }
+
+    if($exists){
+        PutProductCart((int)$_POST["ProductId"], 1, $currentAmount + (int)$_POST["AddAmount"]); 
     }
     else{
-
-        $added = false; // doesn't work when assigning the amount in a foreach loop, not very preatty code
-
-        for ($i=0; $i < count($_SESSION["Cart"]); $i++) { 
-            if($_SESSION["Cart"][$i]["ProductId"] == (int)$_POST["ProductId"]){
-                $_SESSION["Cart"][$i]["AddAmount"] += (int)$_POST["AddAmount"];
-                
-                //dont post if you should only update
-                PutProductCart((int)$_POST["ProductId"], 1, $_SESSION["Cart"][$i]["AddAmount"]); 
-               
-                $added = true;
-                break;
-            }
-        }
-
-        if(!$added){
-            $item = array("ProductId" => (int)$_POST["ProductId"], "AddAmount" => (int)$_POST["AddAmount"]);
-            array_push($_SESSION["Cart"], $item);
-            PostProductCart((int)$_POST["ProductId"], 1, (int)$_POST["AddAmount"]); // the 1, is the cart id, which needs to be assigned asswell
-            $added = true;
-        }
+        PostProductCart((int)$_POST["ProductId"], 1, (int)$_POST["AddAmount"]); // the 1, is the cart id, which needs to be assigned asswell
     }
-    
+  
     //session_unset();  //clears session
 
     header('Location: '."index");

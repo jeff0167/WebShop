@@ -1,14 +1,14 @@
 <?php
     class Product
     {
-        readonly int $Id; // can't you make props
+        private int $Id; // can't you make props
         private string $Name;
         private string $Description;
         private string $Tag_id;
         private float $Price;
         private string $ImagePath;
 
-        function __construct($Id, $Name, $Description, $Tag_id, $Price, $ImagePath)
+        function __construct($Id = 0, $Name = "", $Description = "", $Tag_id = 0, $Price = 0, $ImagePath = "")
         {
             $this->Id = $Id;
             $this->Name = $Name;
@@ -18,6 +18,7 @@
             $this->ImagePath = $ImagePath;
         }
 
+        function getId() { return $this->Id; }
         function getName() { return $this->Name; }
         function getDescription() { return $this->Description; }
         function getTag_id() { return $this->Tag_id; }

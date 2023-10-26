@@ -1,15 +1,16 @@
-<?php require_once "../coolLib.php";
+<?php
     $servername = "localhost";
+    $database = "phpwebshop";
     $username = "root";
     $password = "root";
 
-    $con = new mysqli($servername, $username, $password, "phpwebshop");
-
-    if($con->connect_error){
-        //cw("Failed to connect to database");
-        die("Error connecting to" . $con->connect_error);
+    try {
+        $pdo = new PDO("mysql:host=$servername;dbname=$database;", $username, $password, array(
+            PDO::ATTR_PERSISTENT => true
+        ));
+        //cw("Successfully connected to database");
+    } catch (PDOException $e) {
+        cw("something went wrong");
     }
-    else  
-    //cw("Successfully connected to database");
 
 ?>

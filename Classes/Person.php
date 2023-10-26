@@ -1,20 +1,32 @@
 <?php
-    class Product
+    class Person
     {
         private int $Id;
         private string $Name;
-        private string $Email;
         private string $PhoneNumber;
+        private string $Address;
+        private string $Email;
         private string $Password;
+        private bool $IsAdmin;
 
-        function __construct($Id, $Name, $Email, $PhoneNumber, $Password)
+        function __construct($Id = 0, $Name = "", $Email = "", $PhoneNumber = "", $Address = "", $Password = "", $IsAdmin = false)
         {
             $this->Id = $Id;
             $this->Name = $Name;
-            $this->Email = $Email;
             $this->PhoneNumber = $PhoneNumber;
+            $this->Address = $Address;
+            $this->Email = $Email;
             $this->Password = $Password;
+            $this->IsAdmin = $IsAdmin;
         }
+
+        function getId() { return $this->Id; }
+        function getName() { return $this->Name; }
+        function getPhoneNumber() { return $this->PhoneNumber; }
+        function getAddress() { return $this->Address; }
+        function getEmail() { return $this->Email; }
+        function getPassword() { return $this->Password; }
+        function getIsAdnim() { return $this->IsAdmin; }
     }
 
 ?>
