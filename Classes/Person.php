@@ -26,7 +26,7 @@
         function getAddress() { return $this->Address; }
         function getEmail() { return $this->Email; }
         function getPassword() { return $this->Password; }
-        function getIsAdnim() { return $this->IsAdmin; }
+        function getIsAdmin() { return $this->IsAdmin; }
     }
 
 ?>

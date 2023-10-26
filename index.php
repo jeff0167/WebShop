@@ -1,14 +1,13 @@
 <?php require_once "./Everything.php";
 
-    session_start();
+    session_start(); // account Umbrella@edo.com Umibozu          Silversoul@edo.com    Shinpachi
+    //session_destroy(); // if bugs use this to clear cache
     
     $products = getProducts();
     $productCart = GetProductCart(1); // remember the param is the cart id which sould come from the person id in the cart table
 
-    $_SESSION["Person"] = 1;
-
-?>
-<!DOCTYPE html>
+?> 
+<!DOCTYPE html>   
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -20,15 +19,18 @@
 <body class="BG-Black text-white center-text">
 
 <ul>
-  <li><a href="#home">Product</a></li>
+  <li><a href="./index.php">Product</a></li>
   <li><a href="#news">Cart</a></li>
-  <li><a href="./Pages/LoginPage.php">Login</a></li>
+  <?php echo (isset($_SESSION["Person"])) ? "<li><a href='./Actions/Logout.php'>Logout</a></li>" : "<li><a href='./Pages/LoginPage.php'>Login</a></li>" ?>
+  <li><?php if(isset($_SESSION["Person"])) echo "Welcome " . $_SESSION["Person"]->GetName(); //?></li> 
 </ul>
   
 <div class="ProductList">
     <h1>Results</h1>
     <?php  
-
+        if(isset($_SESSION["Person"])){
+            if($_SESSION["Person"]->getIsAdmin()) echo "We have an admin watch out";
+        }
         foreach ($products as $product) {
             ?>
             <div class="Product">

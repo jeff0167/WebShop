@@ -5,7 +5,7 @@
 
     $person = GetPersonByLoginInfo($_POST["Email"], $_POST["Password"]);
 
-    if(!$person){
+    if($person->GetName() == ""){
         echo "user not found";
         header('Location: '."../Pages/ErrorPage.php");
         die();
