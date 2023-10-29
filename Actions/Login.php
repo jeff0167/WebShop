@@ -13,7 +13,7 @@
     else{
         $_SESSION["Person"] = $person;
         echo "Logged in";
-        header('Location: '."../index");
+        header('Location: '."../Pages/index");
         die();
         //var_dump($person);
     }

@@ -4,4 +4,6 @@
     require_once "API.php";
     require_once "Classes/ProductCart.php";
     require_once "Classes/Product.php";
+    require_once "Classes/Cart.php";
+    require_once "Classes/Tag.php";
 ?>
