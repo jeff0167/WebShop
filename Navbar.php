@@ -14,7 +14,7 @@
     <title>Web shop</title>
 </head>
 <body class="BG-Black text-white center-text">
- <ul>
+ <ul class="ul">
     <li class="li"><a class="NavButton <?= ($activePage == 'index') ? 'active':''; ?>" href="index.php">Product</a></li>
     <li class="li"><a class="NavButton <?= ($activePage == 'Cart') ? 'active':''; ?>" href="#news">Cart</a></li>
     <?php if(!isset($_SESSION["Person"])){
@@ -36,5 +36,5 @@
         <?php
       }
     } ?>
-    <li>Welcome <?php if(isset($_SESSION["Person"])) echo $_SESSION["Person"]->GetName(); ?></li> 
+    <li style="margin-top: 1.5rem; font-size: 22px;">Welcome <?php if(isset($_SESSION["Person"])) echo $_SESSION["Person"]->GetName(); ?></li> 
   </ul>

@@ -1,9 +1,10 @@
 <?php require_once "../Everything.php";
+    // https://www.w3schools.com/bootstrap/tryit.asp?filename=trybs_ref_js_dropdown_multilevel_css&stacked=h    LINK TO SUBMENU!!!!
 
     session_start(); // account Umbrella@edo.com Umibozu       Silversoul@edo.com  Shinpachi    Glasses@edo.com  !Glasses9
     //session_destroy(); // if bugs use this to clear cache
     
-    $products = GetProducts();
+    $products = GetProducts();                // HACKS ctrl + shift + f to search in CURRENT FILE
     $filteredProducts = $products;
     $categories = GetCategories();
     $tags = GetTags();
@@ -16,108 +17,74 @@
 
     require_once "../Navbar.php";
 
-    function FilterProducts()
+    function FilterProductsByCategory()
     {
         return array_filter($GLOBALS["products"], function ($x) {
             foreach ($GLOBALS["tags"] as $tag) {
                 if($x->getTag_id() == $tag->getId()) {
-                    if($tag->getCategoryId() == $_POST["Filter"])
-                    return true;
+                    return $tag->getCategoryId() == $_POST["Category"];
                 }
             }
-            });
+        });
     }
 
-    if(isset($_POST["Filter"])){ // filtering by category
-        $filteredProducts = FilterProducts($_POST["Filter"]);
-        //var_dump($filteredProducts);
+    function FilterProductsByTag()
+    {
+        return array_filter($GLOBALS["products"], function ($x) {
+                return $x->getTag_id() == $_POST["Tag"];
+        });
     }
 
-    // filter by category
-    // filter by tag
-    // highlight selected page in navbar
+    if(isset($_POST["Category"])){ // filtering by category
+        $filteredProducts = FilterProductsByCategory($_POST["Category"]);
+        foreach($GLOBALS["categories"] as $tag){
+            if($tag->getId() == $_POST["Category"]) $_SESSION["CurrentFilter"] = $tag->getName();
+        }
+    }
+
+    if(isset($_POST["Tag"])){ // filtering by category
+        $filteredProducts = FilterProductsByTag($_POST["Tag"]);
+        foreach($GLOBALS["tags"] as $tag){
+            if($tag->getId() == $_POST["Tag"]) $_SESSION["CurrentFilter"] = $tag->getName();
+        }
+    }
+
+    // get images for products,  LAST THING POG!!
 ?> 
   
 <div class="ProductList">
-    <h1>Product List</h1>
-    <?php  
-        if(isset($_SESSION["Person"])){
-            if($_SESSION["Person"]->getIsAdmin()) echo "We have an admin watch out";
-        }
-        ?>
-
-<div class="container">                                    
+    <h4 style="margin-left: 1.5rem;">Product List</h4> 
+    
+<form action="index.php" method="post">
+<div class="container categorySelect" id="cat">                                    
   <div class="dropdown">
-    <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">Tutorials
+  <h4 style="margin-left: 1.5rem"><?php if(isset($_SESSION["CurrentFilter"])) echo $_SESSION["CurrentFilter"]?></h4>
+  <button class="btn btn-default dropdown-toggle categorySelect" type="button" data-toggle="dropdown">Category 
     <span class="caret"></span></button>
-    <ul class="dropdown-menu">
-        <?php
-            foreach ($categories as $category ) {
-                ?>
-                    <!-- <li><a tabindex="-1" href="#"><?php echo $category->getName() ?></a></li> -->
-                <?php
-            }
-        ?>
+    <ol class="dropdown-menu">
       <li class="dropdown-submenu">
       <?php
             foreach ($categories as $category ) {
                 ?>
-                    <li><a tabindex="-1" href="#"><?php echo $category->getName() ?></a></li>
-                    <a class="test" tabindex="-1" href="#"><?php echo $category->getName() ?> <span class="caret"></span></a>
-
-                    <?php
+                    <button name="Category" class="subMenuButton" value="<?php echo $category->getId() ?>" ><?php echo $category->getName() ?></button>
+                <?php
                     foreach ($tags as $tag){
                         if($category->getId() == $tag->getCategoryId()){
-                        ?>
-                            <li value="<?php echo $tag->getId() ?>" ><a tabindex="-1" href="#"><?php echo $tag->getName() ?></a></li>
-                        <?php
+                            ?>
+                                <br>
+                                <button name="Tag" class="subSubMenuButton" value="<?php echo $tag->getId() ?>" ><?php echo $tag->getName() ?></button>
+                            <?php
                         }
                     }
-                    ?>
-
-                    <ul class="dropdown-menu">
-                    <li><a tabindex="-1" href="#">2nd level dropdown</a></li>
-                    <li><a tabindex="-1" href="#">2nd level dropdown</a></li>
-                    <li class="dropdown-submenu">
-                        <a class="test" href="#">Another dropdown <span class="caret"></span></a>
-                        <ul class="dropdown-menu">
-                        <li><a href="#">3rd level dropdown</a></li>
-                        <li><a href="#">3rd level dropdown</a></li>
-                        </ul>
-                    </li>
-                    </ul>
+                ?>
+                <br>
                 <?php
             }
         ?>
-        <a class="test" tabindex="-1" href="#">New dropdown <span class="caret"></span></a>
-        <ul class="dropdown-menu">
-          <li><a tabindex="-1" href="#">2nd level dropdown</a></li>
-          <li><a tabindex="-1" href="#">2nd level dropdown</a></li>
-          <li class="dropdown-submenu">
-            <a class="test" href="#">Another dropdown <span class="caret"></span></a>
-            <ul class="dropdown-menu">
-              <li><a href="#">3rd level dropdown</a></li>
-              <li><a href="#">3rd level dropdown</a></li>
-            </ul>
-          </li>
-        </ul>
       </li>
-    </ul>
+    </ol>
   </div>
 </div>
-
-        <form class="categorySelect" action="index.php" method="post">
-            <select name="Filter">
-            <?php
-                foreach ($categories as $category){
-                    ?>
-                        <option value="<?php echo $category->getId() ?>" > <?php echo $category->getName() ?></option>;
-                    <?php
-                }
-            ?>
-            </select>
-            <button type="submit">Filter</button>
-        </form>
         <?php
         foreach ($filteredProducts as $product) {
             ?>
@@ -126,7 +93,7 @@
                 <img src=<?php echo "../Images/". ($product->getImagePath() != "" ? $product->getImagePath(): "/MSI_1_Monitor") . ".jpg"?>>
             </div>
             <div class="ProductValues">
-                <div class="Bold"><?php echo $product->getName() ?></div>
+                <div class="Bold TopMargin"><?php echo $product->getName() ?></div>
                 <div><?php echo $product->getDescription() ?></div>
                 <div class="Bold"><?php echo $product->getPrice() . " $"?></div> 
             </div>
@@ -135,7 +102,6 @@
                     if(isset($_SESSION["Person"])){
                         ?>
                         <form action="../Actions/AddToCart.php" method="post"> 
-                            <!-- Should be able to see how many you have in cart, and can specificially choose the amount you want to add -->
                             <?php
                                 $amount = 0;
                                 foreach($productCart as $item){
@@ -154,7 +120,7 @@
                             <button type="submit" class="AddToCart">Add product</button>
                             <?php
                     }
-                    else echo "login to add to cart";
+                    else echo "<div style='margin-top: 10rem'>Login to add product to cart</div>";
                 ?>
             </form> 
             </div>

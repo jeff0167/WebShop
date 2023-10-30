@@ -10,8 +10,9 @@
     <input class="ProductAmount" type="password" name="Password" placeholder="Password">
     <button type="submit" class="AddToCart">Login</button>
     </form> 
-
-    <p>Don't have an account? <a href="./CreateAccountPage.php"><button type="submit" class="AddToCart">Sign up</button></a></p>
+    <div class="UnderDiv">
+      <p>No account? <a class="a" href="./CreateAccountPage.php"><button class="AddToCart">Sign up</button></a></p>
+    </div>
 </div>
 
 </html>

@@ -1,12 +1,11 @@
 <?php require_once "../Everything.php";
 
     session_start(); // account Umbrella@edo.com Umibozu       Silversoul@edo.com  Shinpachi    Glasses@edo.com  !Glasses9
-    //session_destroy(); // if bugs use this to clear cache
     
     $products = GetProducts();
     $tags = getTags();
 
-    require_once "../Navbar.php"; // TODO put admin ref in navbar !!
+    require_once "../Navbar.php"; 
 
     if(isset($_SESSION["Person"])){
         if(!$_SESSION["Person"]->getIsAdmin()){
@@ -47,7 +46,7 @@
     </div>
   
 <div class="ProductList">
-    <h1>Product List</h1>
+    <h4 style="margin-left: 1.5rem;">Product List</h4>
     <?php  
         if(isset($_SESSION["Person"])){
             if($_SESSION["Person"]->getIsAdmin()) echo "We have an admin watch out <br>";
@@ -59,7 +58,7 @@
             <div class="image">
                 <img src=<?php echo "../Images/". ($product->getImagePath() != "" ? $product->getImagePath(): "/MSI_1_Monitor") . ".jpg"?>>
             </div>
-            <div class="ProductValues">
+            <div class="ProductValuesAdmin">
                 <form action="../Actions/UpdateProduct.php" method="post"> 
                     <input type="hidden" name="ProductId" value="<?php echo $product->getId(); ?>" />
                     <div style="margin-top: -.9rem;" class="Bold specialInput">Name <br><input name="Name" value="<?php echo $product->getName(); ?>"></div>

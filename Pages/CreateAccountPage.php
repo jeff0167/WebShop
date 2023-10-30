@@ -1,6 +1,5 @@
 <?php require "../Everything.php";
   session_start();
-  //session_destroy(); // if bugs use this to clear cache
   require_once "../Navbar.php";
 ?>
 
@@ -13,7 +12,9 @@
     <input class="ProductAmount" type="password" name="Password" placeholder="Password">
     <button type="submit" class="AddToCart">Create Account</button>
     </form> 
-    <p>Have account? <a href="./LoginPage.php"><button type="submit" class="AddToCart">Log in</button></a></p>
+    <div class="UnderDiv">
+    <p>Have account? <a class="a" href="./LoginPage.php"><button type="submit" class="AddToCart">Log in</button></a></p>
+    </div>
 </div>
 
 <div>
