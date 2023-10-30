@@ -6,27 +6,20 @@
     $products = GetProducts();
     $tags = getTags();
 
+    require_once "../Navbar.php"; // TODO put admin ref in navbar !!
+
     if(isset($_SESSION["Person"])){
+        if(!$_SESSION["Person"]->getIsAdmin()){
+            echo "Restricted Area: Requires authentication";
+            return;
+        }
         $cart = GetCartByPersonId($_SESSION["Person"]->getId());
         $_SESSION["Cart_id"] = $cart->getId();
         $productCart = GetProductCart($cart->getId());
+    }else{
+        echo "Restricted Area: Requires authentication";
+            return;
     }
-
-
-
-    require_once "../Navbar.php"; // TODO put admin ref in navbar !!
-
-    // if admin show admin things, such as the admin page
-
-    // add product
-    // -select category
-    // -select tag
-    // delete product
-    // update product
-    // filter by category
-    // filter by tag
-
-
 ?> 
 
 <div class="AddProductBox">
@@ -54,7 +47,7 @@
     </div>
   
 <div class="ProductList">
-    <h1>Results</h1>
+    <h1>Product List</h1>
     <?php  
         if(isset($_SESSION["Person"])){
             if($_SESSION["Person"]->getIsAdmin()) echo "We have an admin watch out <br>";
@@ -69,7 +62,7 @@
             <div class="ProductValues">
                 <form action="../Actions/UpdateProduct.php" method="post"> 
                     <input type="hidden" name="ProductId" value="<?php echo $product->getId(); ?>" />
-                    <div class="Bold">Name <br><input name="Name" value="<?php echo $product->getName(); ?>"></div>
+                    <div style="margin-top: -.9rem;" class="Bold specialInput">Name <br><input name="Name" value="<?php echo $product->getName(); ?>"></div>
                     <div>Description <br><input name="Description" value="<?php echo $product->getDescription() ?>"></div>
                     <div class="Bold">Price <br><input name="Price" value="<?php echo $product->getPrice()?>">$</div> 
                     <div class="Bold">Image path <br><input name="ImagePath" value="<?php echo $product->getImagePath()?>"></div> 

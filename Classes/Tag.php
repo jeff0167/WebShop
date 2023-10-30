@@ -3,7 +3,7 @@
     {
         private int $Id;
         private string $Name;      
-        private string $Category_id; 
+        private int $Category_id; 
 
         function __construct($Id = 0, $Name = "", $Category_id = 0)
         {

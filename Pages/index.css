@@ -53,18 +53,18 @@ input:focus{
     margin: .5rem;
 }
 
-ul {
+.ul {
     list-style-type: none;
     margin: 0;
     padding: 0;
     overflow: hidden;
   }
   
-  li {
+  .li {
     float: left;
   }
   
-  li a {
+  .li a {
     display: block;
     padding: 8px;
     margin: .5rem;
@@ -127,3 +127,25 @@ select{
 .active{
     background-color:#ff9500d8;
 }
+
+.categorySelect{
+    position: absolute;
+    right: 4%;
+    top: 17%;
+}
+
+.yo{
+    width: 200%;
+    transform: translate(100px,100px);
+}
+
+
+.dropdown-submenu {
+    position: relative;
+  }
+  
+  .dropdown-submenu .dropdown-menu {
+    top: 0;
+    left: 10%;
+    margin-top: -1px;
+  }

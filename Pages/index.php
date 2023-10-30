@@ -4,6 +4,9 @@
     //session_destroy(); // if bugs use this to clear cache
     
     $products = GetProducts();
+    $filteredProducts = $products;
+    $categories = GetCategories();
+    $tags = GetTags();
 
     if(isset($_SESSION["Person"])){
         $cart = GetCartByPersonId($_SESSION["Person"]->getId());
@@ -11,9 +14,24 @@
         $productCart = GetProductCart($cart->getId());
     }
 
-    require_once "../Navbar.php"; // TODO put admin ref in navbar !!
+    require_once "../Navbar.php";
 
-    // if admin show admin things, such as the admin page
+    function FilterProducts()
+    {
+        return array_filter($GLOBALS["products"], function ($x) {
+            foreach ($GLOBALS["tags"] as $tag) {
+                if($x->getTag_id() == $tag->getId()) {
+                    if($tag->getCategoryId() == $_POST["Filter"])
+                    return true;
+                }
+            }
+            });
+    }
+
+    if(isset($_POST["Filter"])){ // filtering by category
+        $filteredProducts = FilterProducts($_POST["Filter"]);
+        //var_dump($filteredProducts);
+    }
 
     // filter by category
     // filter by tag
@@ -21,12 +39,87 @@
 ?> 
   
 <div class="ProductList">
-    <h1>Results</h1>
+    <h1>Product List</h1>
     <?php  
         if(isset($_SESSION["Person"])){
             if($_SESSION["Person"]->getIsAdmin()) echo "We have an admin watch out";
         }
-        foreach ($products as $product) {
+        ?>
+
+<div class="container">                                    
+  <div class="dropdown">
+    <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">Tutorials
+    <span class="caret"></span></button>
+    <ul class="dropdown-menu">
+        <?php
+            foreach ($categories as $category ) {
+                ?>
+                    <!-- <li><a tabindex="-1" href="#"><?php echo $category->getName() ?></a></li> -->
+                <?php
+            }
+        ?>
+      <li class="dropdown-submenu">
+      <?php
+            foreach ($categories as $category ) {
+                ?>
+                    <li><a tabindex="-1" href="#"><?php echo $category->getName() ?></a></li>
+                    <a class="test" tabindex="-1" href="#"><?php echo $category->getName() ?> <span class="caret"></span></a>
+
+                    <?php
+                    foreach ($tags as $tag){
+                        if($category->getId() == $tag->getCategoryId()){
+                        ?>
+                            <li value="<?php echo $tag->getId() ?>" ><a tabindex="-1" href="#"><?php echo $tag->getName() ?></a></li>
+                        <?php
+                        }
+                    }
+                    ?>
+
+                    <ul class="dropdown-menu">
+                    <li><a tabindex="-1" href="#">2nd level dropdown</a></li>
+                    <li><a tabindex="-1" href="#">2nd level dropdown</a></li>
+                    <li class="dropdown-submenu">
+                        <a class="test" href="#">Another dropdown <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                        <li><a href="#">3rd level dropdown</a></li>
+                        <li><a href="#">3rd level dropdown</a></li>
+                        </ul>
+                    </li>
+                    </ul>
+                <?php
+            }
+        ?>
+        <a class="test" tabindex="-1" href="#">New dropdown <span class="caret"></span></a>
+        <ul class="dropdown-menu">
+          <li><a tabindex="-1" href="#">2nd level dropdown</a></li>
+          <li><a tabindex="-1" href="#">2nd level dropdown</a></li>
+          <li class="dropdown-submenu">
+            <a class="test" href="#">Another dropdown <span class="caret"></span></a>
+            <ul class="dropdown-menu">
+              <li><a href="#">3rd level dropdown</a></li>
+              <li><a href="#">3rd level dropdown</a></li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+</div>
+
+        <form class="categorySelect" action="index.php" method="post">
+            <select name="Filter">
+            <?php
+                foreach ($categories as $category){
+                    ?>
+                        <option value="<?php echo $category->getId() ?>" > <?php echo $category->getName() ?></option>;
+                    <?php
+                }
+            ?>
+            </select>
+            <button type="submit">Filter</button>
+        </form>
+        <?php
+        foreach ($filteredProducts as $product) {
             ?>
             <div class="Product">
             <div class="image">
@@ -70,5 +163,14 @@
         }
         ?>
 </div>
+<script>
+$(document).ready(function(){
+  $('.dropdown-submenu a.test').on("click", function(e){
+    $(this).next('ul').toggle();
+    e.stopPropagation();
+    e.preventDefault();
+  });
+});
+</script>
 </html>
 </body>

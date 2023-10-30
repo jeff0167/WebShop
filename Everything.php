@@ -6,4 +6,6 @@
     require_once "Classes/Product.php";
     require_once "Classes/Cart.php";
     require_once "Classes/Tag.php";
+    require_once "Classes/Category.php";
+    require_once "Actions/CategoryController.php";
 ?>
