@@ -167,7 +167,7 @@ select{
 }
 
 .active{
-    background-color:#ff9500d8;
+    background-color:#ff9500d8 !important;
 }
 
 .categorySelect{

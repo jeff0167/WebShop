@@ -15,7 +15,7 @@
 </head>
 <body class="BG-Black text-white center-text">
  <ul class="ul">
-   <li class="li"><a class="NavButton <?= ($activePage == 'FrontPAge') ? 'active':''; ?>" href="FrontPage.php">Front Page</a></li>
+   <li class="li"><a class="NavButton <?= ($activePage == 'FrontPage') ? 'active':''; ?>" href="FrontPage.php">Front Page</a></li>
     <li class="li"><a class="NavButton <?= ($activePage == 'index') ? 'active':''; ?>" href="index.php">Product</a></li>
     <?php if(!isset($_SESSION["Person"])){
       ?>

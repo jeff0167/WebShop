@@ -10,7 +10,7 @@
         ));
         //cw("Successfully connected to database");
     } catch (PDOException $e) {
-        cw("something went wrong");
+        echo "something went wrong";
     }
 
 ?>
