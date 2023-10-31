@@ -227,3 +227,7 @@ a{
 .a{
     all: unset !important;
 }
+
+.CenterHeader{
+    text-align: center;
+}

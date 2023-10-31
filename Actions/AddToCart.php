@@ -6,7 +6,6 @@
     $exists = false;
     foreach ($productCart as $product){
         if((int)$_POST["ProductId"] == $product->getProductId()) {
-            echo "it exist";
             $exists = true;
             $currentAmount = $product->getAmount();
             break;

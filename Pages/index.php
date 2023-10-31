@@ -49,42 +49,46 @@
         }
     }
 
-    // get images for products,  LAST THING POG!!
+    function cmp($a, $b) {  
+        return strcasecmp($a->getName(), $b->getName());
+    }
+    usort($filteredProducts,"cmp"); // sort products by their name
+
+    //The page needs a search button!
 ?> 
-  
 <div class="ProductList">
     <h4 style="margin-left: 1.5rem;">Product List</h4> 
-    
-<form action="index.php" method="post">
-<div class="container categorySelect" id="cat">                                    
-  <div class="dropdown">
-  <h4 style="margin-left: 1.5rem"><?php if(isset($_SESSION["CurrentFilter"])) echo $_SESSION["CurrentFilter"]?></h4>
-  <button class="btn btn-default dropdown-toggle categorySelect" type="button" data-toggle="dropdown">Category 
-    <span class="caret"></span></button>
-    <ol class="dropdown-menu">
-      <li class="dropdown-submenu">
-      <?php
-            foreach ($categories as $category ) {
-                ?>
-                    <button name="Category" class="subMenuButton" value="<?php echo $category->getId() ?>" ><?php echo $category->getName() ?></button>
+    <form action="index.php" method="post">
+        <div class="container categorySelect" id="cat">                                    
+            <div class="dropdown">
+                <h4 style="margin-left: 1.5rem"><?php if(isset($_SESSION["CurrentFilter"])) echo $_SESSION["CurrentFilter"]?></h4>
+                <button class="btn btn-default dropdown-toggle categorySelect" type="button" data-toggle="dropdown">Category 
+                <span class="caret"></span></button>
+                <ol class="dropdown-menu">
+                <li class="dropdown-submenu">
                 <?php
-                    foreach ($tags as $tag){
-                        if($category->getId() == $tag->getCategoryId()){
+                        foreach ($categories as $category ) {
                             ?>
-                                <br>
-                                <button name="Tag" class="subSubMenuButton" value="<?php echo $tag->getId() ?>" ><?php echo $tag->getName() ?></button>
+                                <button name="Category" class="subMenuButton" value="<?php echo $category->getId() ?>" ><?php echo $category->getName() ?></button>
+                            <?php
+                                foreach ($tags as $tag){
+                                    if($category->getId() == $tag->getCategoryId()){
+                                        ?>
+                                            <br>
+                                            <button name="Tag" class="subSubMenuButton" value="<?php echo $tag->getId() ?>" ><?php echo $tag->getName() ?></button>
+                                        <?php
+                                    }
+                                }
+                            ?>
+                            <br>
                             <?php
                         }
-                    }
-                ?>
-                <br>
-                <?php
-            }
-        ?>
-      </li>
-    </ol>
-  </div>
-</div>
+                    ?>
+                </li>
+                </ol>
+            </div>
+        </div>
+    </form>
         <?php
         foreach ($filteredProducts as $product) {
             ?>
