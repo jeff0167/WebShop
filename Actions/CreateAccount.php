@@ -3,7 +3,6 @@
     session_start();
     if(isset($_SESSION["Error"])){
         unset($_SESSION["Error"]);
-        $_SESSION["Error"] = "";
     }
 
     $namePattern = "/^[a-zA-Z]{3,20}$/";
