@@ -7,7 +7,7 @@
         $SQL = "SELECT * FROM ProductCart WHERE Cart_id = $cart_id";
         $sth = $GLOBALS['pdo']->query($SQL);
         $sth->setFetchMode(PDO::FETCH_CLASS|PDO::FETCH_PROPS_LATE, "ProductCart");
-        return $sth->fetchAll();
+        return $sth->fetchAll(); // this returns a list of all the products for that cart with that id
     }
 
     function PostProductCart(int $product_id, int $cart_id, int $amount)

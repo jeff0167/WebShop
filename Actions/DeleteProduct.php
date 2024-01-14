@@ -7,7 +7,7 @@
         header('Location: '."../Pages/AdminPage.php");
         die();
     }
-    else{
+    else{ // do we actually need a else here?
         try{
             DeleteProduct($_POST["Product_id"]);
         }

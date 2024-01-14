@@ -90,7 +90,7 @@
         </div>
     </form>
         <?php
-        foreach ($filteredProducts as $product) {
+        foreach ($filteredProducts as $product) { // this whole section should be it's own reusable file, like a component, to clear up the index page
             ?>
             <div class="Product">
             <div class="image">
@@ -137,8 +137,8 @@
 $(document).ready(function(){
   $('.dropdown-submenu a.test').on("click", function(e){
     $(this).next('ul').toggle();
-    e.stopPropagation();
-    e.preventDefault();
+    e.stopPropagation(); // and this one too
+    e.preventDefault(); // oooh what is it this does again, can't quite explain it, it prevents re-rendering, to fetch the page from the server but still update the UI right?
   });
 });
 </script>

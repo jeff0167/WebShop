@@ -9,7 +9,7 @@
 
     function PostCart(int $person_id)
     {
-        $sth = $GLOBALS['pdo']->query("INSERT INTO Cart VALUES (null, $person_id)");
+        $GLOBALS['pdo']->query("INSERT INTO Cart VALUES (null, $person_id)");
     }
 
 ?>

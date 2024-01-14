@@ -5,7 +5,7 @@
     if(!isset($_POST["Name"]) || !isset($_POST["Description"])  || !isset($_POST["Tag_id"])  || !isset($_POST["Price"])){
         $_SESSION["Error"] = "Error, some fields were not filled in";
         header('Location: '."../Pages/AdminPage");
-        die();
+        die(); // what does die mean, what happens? is it like return?
     }
     if (!isset($_POST["ImagePath"])){
         $_POST["ImagePath"] = "";

@@ -16,7 +16,7 @@
         PutProductCart((int)$_POST["ProductId"], (int)$_SESSION["Cart_id"], $currentAmount + (int)$_POST["AddAmount"]); 
     }
     else{
-        PostProductCart((int)$_POST["ProductId"], (int)$_SESSION["Cart_id"], (int)$_POST["AddAmount"]); // the 1, is the cart id, which needs to be assigned asswell
+        PostProductCart((int)$_POST["ProductId"], (int)$_SESSION["Cart_id"], (int)$_POST["AddAmount"]); 
     }
   
     //session_unset();  //clears session

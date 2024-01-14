@@ -12,7 +12,7 @@
             PutProduct($_POST["ProductId"], $_POST["Name"], $_POST["Description"], $_POST["Price"], $_POST["ImagePath"]);
         }
         catch(Exception $e){
-            $_SESSION["Error"] = "Cannot delete product when some one has that product in their cart";
+            $_SESSION["Error"] = "Could not find a product with that id in the cart";
         }
     }
 
