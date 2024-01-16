@@ -1,4 +1,4 @@
-<?php require "../Everything.php";
+<?php // removed require, it is never used here
   session_start();
   //session_destroy(); // if bugs use this to clear cache
 

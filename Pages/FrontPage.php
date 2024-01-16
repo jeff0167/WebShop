@@ -1,4 +1,5 @@
 <?php require_once "../Everything.php";
+    session_start();
     require_once "../Navbar.php";
 ?> 
   

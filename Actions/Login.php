@@ -8,7 +8,7 @@
     if($person->GetName() == ""){
         echo "user not found";
         header('Location: '."../Pages/ErrorPage.php");
-        die();
+        die("hello"); // terminate the current script can send a message as input
     }
     else{
         $_SESSION["Person"] = $person;
