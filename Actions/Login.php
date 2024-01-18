@@ -14,7 +14,7 @@
         $_SESSION["Person"] = $person;
         echo "Logged in";
         header('Location: '."../Pages/index");
-        die();
+        die(); // hmm it still works if you don't call die, but can lead to unexpected behaviour as the script still runs in the background
         //var_dump($person);
     }
 ?>
